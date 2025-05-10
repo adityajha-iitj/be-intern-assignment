@@ -12,6 +12,12 @@ userRouter.get('/', userController.getAllUsers.bind(userController));
 // Get user by id
 userRouter.get('/:id', userController.getUserById.bind(userController));
 
+// Get user activity history
+userRouter.get('/:id/activity', userController.getUserActivity.bind(userController));
+
+// Get user followers
+userRouter.get('/:id/followers', userController.getUserFollowers.bind(userController));
+
 // Create new user
 userRouter.post('/', validate(createUserSchema), userController.createUser.bind(userController));
 
@@ -20,3 +26,4 @@ userRouter.put('/:id', validate(updateUserSchema), userController.updateUser.bin
 
 // Delete user
 userRouter.delete('/:id', userController.deleteUser.bind(userController));
+
