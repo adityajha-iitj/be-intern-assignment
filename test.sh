@@ -27,7 +27,6 @@ make_request() {
     local method=$1
     local endpoint=$2
     local data=$3
-    local auth_header=""
     
     echo "Request: $method $endpoint"
     if [ -n "$data" ]; then
@@ -36,14 +35,14 @@ make_request() {
     
     echo "Response:"
     if [ "$method" = "GET" ]; then
-        if [ -n "$current_user_token" ]; then
-            curl -s -X $method "$endpoint" -H "Authorization: Bearer $current_user_token"
+        if [ -n "$current_user_id" ]; then
+            curl -s -X $method "$endpoint" -H "userId: $current_user_id"
         else
             curl -s -X $method "$endpoint"
         fi
     else
-        if [ -n "$current_user_token" ]; then
-            curl -s -X $method "$endpoint" -H "Content-Type: application/json" -H "Authorization: Bearer $current_user_token" -d "$data"
+        if [ -n "$current_user_id" ]; then
+            curl -s -X $method "$endpoint" -H "Content-Type: application/json" -H "userId: $current_user_id" -d "$data"
         else
             curl -s -X $method "$endpoint" -H "Content-Type: application/json" -d "$data"
         fi
